@@ -176,6 +176,10 @@ cython_debug/
 # Configs
 config/secret.toml
 
+#scripts
+
+plst
+
 # IDE
 .idea
 

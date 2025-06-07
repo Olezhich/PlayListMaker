@@ -1,6 +1,7 @@
 import toml
 import os
-from python.plst import plst_handler, PlayListHandler
+import subprocess
+from python.plst import PlayListHandler
 
 class App:
     def __init__(self):
@@ -30,6 +31,14 @@ class App:
     def make_plst(self):
         self._handler.upload_plst()
 
+    def get_last(self) -> str | bytes:
+        return os.path.join(self._config['playListsPath'], self._handler.lastPlst)
+
     def update_current(self):
-        ...
+        process = subprocess.Popen([self._config['foobarPath'], self.get_last()])
+        try:
+            process.wait(timeout=self._config['delay'])
+        except subprocess.TimeoutExpired:
+            process.terminate()
+            process.kill()
 
