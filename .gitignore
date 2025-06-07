@@ -174,7 +174,7 @@ cython_debug/
 .pypirc
 
 # Configs
-config/
+config/secret.toml
 
 # IDE
 .idea

@@ -1,0 +1,13 @@
+[playlist]
+    foobarPath          = 'path to foobar2000 exe'
+    delay               = 5
+    rootDir             = 'path to your music folder'
+    ignore              = ['.DS_Store', '.localized']
+    playListsPath       = 'path ot your playlists folder'
+    playListNamePattern = 'My_Audio_'
+    suf                 = ['.flac', '.mp3', '.ape', '.wav']
+
+
+
+
+

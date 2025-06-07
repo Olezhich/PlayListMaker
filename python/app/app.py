@@ -4,11 +4,28 @@ from python.plst import plst_handler, PlayListHandler
 
 class App:
     def __init__(self):
+        self._config = self.get_config()
+        self._handler = PlayListHandler(self._config)
+
+    def get_config(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         project_root = os.path.dirname(os.path.dirname(current_dir))
-        config_path = os.path.join(project_root, 'config', 'config.toml')
-        self._config = toml.load(os.path.join(project_root, config_path))
-        self._handler = PlayListHandler(self._config['playlist'])
+
+        main_path = os.path.join(project_root, 'config', 'config.toml')
+        secrets_path = os.path.join(project_root, 'config', 'secret.toml')
+        secrets_path = os.path.join(project_root, secrets_path)
+
+        base_config = toml.load(os.path.join(project_root, main_path))['playlist']
+        secrets_config = {}
+        if os.path.exists(secrets_path):
+            secrets_config = toml.load(secrets_path)['playlist']
+        for key, val in secrets_config.items():
+            if isinstance(val, list) and isinstance(base_config[key], list):
+                base_config[key] += val
+            else:
+                base_config[key] = val
+
+        return base_config
 
     def make_plst(self):
         self._handler.upload_plst()
