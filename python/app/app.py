@@ -1,14 +1,15 @@
+from typing import Any
 import toml
 import os
 import subprocess
 from python.plst import PlayListHandler
 
 class App:
-    def __init__(self):
+    def __init__(self) -> None:
         self._config = self.get_config()
         self._handler = PlayListHandler(self._config)
 
-    def get_config(self):
+    def get_config(self) -> dict[str, Any]:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         project_root = os.path.dirname(os.path.dirname(current_dir))
 
@@ -28,13 +29,13 @@ class App:
 
         return base_config
 
-    def make_plst(self):
+    def make_plst(self) -> None:
         self._handler.upload_plst()
 
     def get_last(self) -> str | bytes:
         return os.path.join(self._config['playListsPath'], self._handler.lastPlst)
 
-    def update_current(self):
+    def update_current(self) -> None:
         process = subprocess.Popen([self._config['foobarPath'], self.get_last()])
         try:
             process.wait(timeout=self._config['delay'])

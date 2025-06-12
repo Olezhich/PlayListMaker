@@ -42,7 +42,7 @@ class PlayListHandler:
         last_idx = (3 - len(last_idx)) * '0' + last_idx
         new_plst = os.path.join(self._config['playListsPath'], filename[:-3] + last_idx + '.' + suf)
 
-        plst = sorted([i for i in self.make_plst()], reverse=self._config['structure']['reverse']) if self._config['structure']['sortedFinal'] else [i for i in self.make_plst()]
+        plst = sorted([i for i in self.make_plst()], reverse=self._config['reverse']) if self._config['sortedFinal'] else [i for i in self.make_plst()]
 
         with open(new_plst, 'w') as out:
             out.write('#\n')

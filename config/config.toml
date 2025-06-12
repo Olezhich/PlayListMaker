@@ -6,9 +6,9 @@
     playListsPath       = 'path ot your playlists folder'
     playListNamePattern = 'My_Audio_'
     suf                 = ['.flac', '.mp3', '.ape', '.wav']
-    [structure]
-        sortedFinal     = true
-        reverse         = false
+
+    sortedFinal         = true
+    reverse             = false
 
 
 
