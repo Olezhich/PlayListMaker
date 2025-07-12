@@ -1,6 +1,7 @@
 from typing import Any
 import toml
 import os
+import time
 import subprocess
 from python.plst import PlayListHandler
 
@@ -36,10 +37,27 @@ class App:
         return os.path.join(self._config['playListsPath'], self._handler.lastPlst)
 
     def update_current(self) -> None:
-        process = subprocess.Popen([self._config['foobarPath'], self.get_last()])
+        process = subprocess.Popen([self._config['foobarPath'], self.get_last()],
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.STDOUT,
+                                   text=True)
+        target = 'CoreAudio: opening'
         try:
-            process.wait(timeout=self._config['delay'])
-        except subprocess.TimeoutExpired:
+            for line in process.stdout:
+                if target in line:
+                    time.sleep(self._config['delay'])
+                    process.terminate()
+                    process.kill()
+        except KeyboardInterrupt:
             process.terminate()
             process.kill()
+
+    def get_plst(self) -> None:
+        with open(self.get_last(), 'r') as f:
+            first = True
+            for line in f:
+                if first:
+                    first = False
+                else:
+                    print(line.strip())
 
