@@ -18,9 +18,12 @@ def main():
         if arg == 'last':
             print(application.get_last())
 
+        if arg == 'get':
+            application.get_plst()
+
         if arg == 'help':
             print('options:')
-            print('[make, update, last]')
+            print('[make, update, last, get]')
 
 
 if __name__ == "__main__":
